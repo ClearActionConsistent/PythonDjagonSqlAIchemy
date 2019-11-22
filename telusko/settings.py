@@ -129,7 +129,7 @@ USE_TZ = True
 
 AWS_ACCESS_KEY_ID = 'AKIAUVIYCX6JOKSIHTXG'
 AWS_SECRET_ACCESS_KEY = '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'
-AWS_STORAGE_BUCKET_NAME = 'django-s3bucket'
+AWS_STORAGE_BUCKET_NAME = 'django-travello-media'
 AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 AWS_S3_OBJECT_PARAMETERS = {
     'CacheControl': 'max-age=86400',
@@ -137,11 +137,13 @@ AWS_S3_OBJECT_PARAMETERS = {
 AWS_LOCATION = 'static'
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'mysite/static'),
+    os.path.join(BASE_DIR, 'static'),
 ]
 STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
 STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
+
+DEFAULT_FILE_STORAGE = 'telusko.storage_backends.MediaStorage'  # <-- here is where we reference it
 #end S3 bucket config
 
 
