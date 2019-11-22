@@ -1,0 +1,7 @@
+...............
+...............
+pip install boto3
+pip install django-storages
+
+python manage.py collectstatic => run this command to push static folder onto s3 bucket after configuration is all set.
+refer doc: https://simpleisbetterthancomplex.com/tutorial/2017/08/01/how-to-setup-amazon-s3-in-a-django-project.html

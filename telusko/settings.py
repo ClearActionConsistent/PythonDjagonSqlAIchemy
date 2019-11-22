@@ -25,7 +25,7 @@ SECRET_KEY = 'o8ydpe%3bza2r2l3w6s!*c9801b+qgaexiu=xumaoq3u0j+mkv'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+	'storages'
 ]
 
 MIDDLEWARE = [
@@ -121,10 +122,31 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
-STATIC_URL = '/static/'
-STATICFILES_DIRS= [
-    os.path.join(BASE_DIR, 'static')
+
+
+
+#S3 bucket config
+
+AWS_ACCESS_KEY_ID = 'AKIAUVIYCX6JOKSIHTXG'
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_STORAGE_BUCKET_NAME = 'django-s3bucket'
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+AWS_S3_OBJECT_PARAMETERS = {
+    'CacheControl': 'max-age=86400',
+}
+AWS_LOCATION = 'static'
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'mysite/static'),
 ]
+STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+#end S3 bucket config
+
+
+
+
 # STATIC_ROOT = os.path.join(BASE_DIR, 'assets')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
